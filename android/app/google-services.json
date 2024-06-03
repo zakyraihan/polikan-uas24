@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871781911758",
+    "project_id": "polikan",
+    "storage_bucket": "polikan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871781911758:android:d18b361539a2e5058dd49f",
+        "android_client_info": {
+          "package_name": "com.smkmq.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR47kfD4OQFe5oo_r-5enm6Uf0UObaT40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
