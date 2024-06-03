@@ -8,6 +8,8 @@ import 'package:polikan/app/modules/login/views/login_view.dart';
 class RegisterView extends GetView<AuthController> {
   final c = Get.put(AuthController());
 
+  RegisterView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
