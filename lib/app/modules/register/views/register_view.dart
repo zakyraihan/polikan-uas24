@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/controllers/auth_controller.dart';
+import 'package:polikan/app/modules/login/views/login_view.dart';
 
 class RegisterView extends GetView<AuthController> {
   final c = Get.put(AuthController());
@@ -16,10 +17,13 @@ class RegisterView extends GetView<AuthController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => Get.back(),
-              alignment: Alignment.topLeft,
+            Positioned(
+              top: 16,
+              left: 16,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () => Get.back(),
+              ),
             ),
             const SizedBox(height: 40),
             const Icon(Icons.bloodtype, size: 50, color: Colors.white),
@@ -49,7 +53,6 @@ class RegisterView extends GetView<AuthController> {
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-           
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
@@ -70,9 +73,8 @@ class RegisterView extends GetView<AuthController> {
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(10)
-              ),
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
               child: Obx(() {
                 return TextField(
                   controller: controller.passwordController,
@@ -90,7 +92,8 @@ class RegisterView extends GetView<AuthController> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        controller.isLoading.value = !controller.isLoading.value;
+                        controller.isLoading.value =
+                            !controller.isLoading.value;
                       },
                     ),
                   ),
@@ -115,6 +118,15 @@ class RegisterView extends GetView<AuthController> {
                       child: const Text('CREATE ACCOUNT'),
                     );
             }),
+
+            TextButton(
+              onPressed: () {
+                Get.to(() => LoginView());
+              },
+              child: Text("sudah punya akun?", style: TextStyle(
+                color: Colors.white
+              ),),
+            ),
           ],
         ),
       ),
