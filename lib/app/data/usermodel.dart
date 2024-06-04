@@ -19,7 +19,7 @@ class UserModel {
     return UserModel(
       email: json['email'],
       id: json['id'],
-      uid: json['uid'],
+      uid: json[' uid'],
       role: json['role'],
       password: json['password'],
       userName: json['userName'],
@@ -30,7 +30,7 @@ class UserModel {
     return {
       'email': email,
       'id': id,
-      'uid': uid,
+      ' uid': uid,
       'role': role,
       'password': password,
       'userName': userName,
