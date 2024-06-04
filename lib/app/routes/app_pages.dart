@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
+import '../modules/artikel/bindings/artikel_binding.dart';
+import '../modules/artikel/views/artikel_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.ADMIN,
       page: () => const AdminView(),
       binding: AdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.ARTIKEL,
+      page: () => const ArtikelView(),
+      binding: ArtikelBinding(),
     ),
   ];
 }
