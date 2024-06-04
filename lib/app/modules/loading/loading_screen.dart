@@ -18,7 +18,9 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(color: Colors.black,),
+        child: CircularProgressIndicator(
+          color: Colors.black,
+        ),
       ),
     );
   }

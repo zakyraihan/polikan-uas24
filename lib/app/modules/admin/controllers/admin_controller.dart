@@ -1,23 +1,13 @@
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
 class AdminController extends GetxController {
-  //TODO: Implement AdminController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void openScanner() async {
+    await FlutterBarcodeScanner.scanBarcode(
+      '#000000',
+      'Cancel',
+      true,
+      ScanMode.QR,
+    );
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
