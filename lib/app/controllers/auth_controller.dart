@@ -96,30 +96,47 @@ class AuthController extends GetxController {
   Future<void> login(String email, String password) async {
     try {
       Get.defaultDialog(
-          content: const CircularProgressIndicator(), title: 'Loading...');
+        content: const CircularProgressIndicator(),
+        title: 'Loading...',
+      );
+
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      final userDoc = await userCollection.doc(credential.user?.uid).get();
-      if (userDoc.exists) {
-        final userData = userDoc.data() as Map<String, dynamic>;
-        final userRole = userData['role'];
+      final user = credential.user;
+      if (user != null) {
+        final userDoc = await userCollection.doc(user.uid).get();
+        if (userDoc.exists) {
+          final userData = userDoc.data() as Map<String, dynamic>;
+          final userRole = userData['role'];
 
-        if (userRole == 'admin') {
-          Get.offAllNamed(Routes.ADMIN);
+          Get.back(); // Dismiss the loading dialog
+
+          if (userRole == 'admin') {
+            Get.offAllNamed(Routes.ADMIN);
+          } else {
+            Get.offAllNamed(Routes.HOME);
+          }
         } else {
-          Get.offAllNamed(Routes.HOME);
+          Get.back(); // Dismiss the loading dialog
+          Get.snackbar(
+            'Login Failed',
+            'User data not found',
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+          );
         }
       } else {
+        Get.back(); // Dismiss the loading dialog
         Get.snackbar(
           'Login Failed',
-          'User data not found',
+          'Failed to get user data after login',
           backgroundColor: Colors.red,
           duration: const Duration(seconds: 3),
         );
       }
     } on FirebaseAuthException catch (e) {
-      Get.back();
+      Get.back(); // Dismiss the loading dialog
       if (e.code == 'user-not-found') {
         Get.snackbar(
           'Login Failed',
@@ -136,7 +153,7 @@ class AuthController extends GetxController {
         );
       }
     } catch (e) {
-      Get.back();
+      Get.back(); // Dismiss the loading dialog
       Get.snackbar(
         'Login Failed',
         'Error: $e',
