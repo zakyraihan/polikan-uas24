@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +65,10 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ],
                 ),
-                Image.asset('image/doctorhome.png'),
+                Image.asset(
+                  'images/doctorhome.png',
+                  height: 160,
+                ),
               ],
             ),
           ),
@@ -108,7 +110,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Tempat Tidur',
+                        'Poli',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
