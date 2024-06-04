@@ -8,6 +8,7 @@ import 'package:polikan/app/modules/register/controllers/register_controller.dar
 
 class RegisterView extends GetView<RegisterController> {
   final c = Get.put(AuthController());
+  final RxBool isAdmin = false.obs; // Menggunakan RxBool untuk isAdmin
 
   RegisterView({super.key});
 
@@ -40,7 +41,7 @@ class RegisterView extends GetView<RegisterController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
-                    controller: c.userNameController,
+                    controller: controller.userNameController,
                     decoration: const InputDecoration(
                       labelText: 'Username',
                       labelStyle: TextStyle(color: Colors.white),
@@ -57,7 +58,7 @@ class RegisterView extends GetView<RegisterController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
-                    controller: c.emailController,
+                    controller: controller.emailController,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       labelStyle: TextStyle(color: Colors.white),
@@ -75,7 +76,7 @@ class RegisterView extends GetView<RegisterController> {
                   ),
                   child: Obx(() {
                     return TextField(
-                      controller: c.passwordController,
+                      controller: controller.passwordController,
                       obscureText: controller.isObscure.value,
                       decoration: InputDecoration(
                         labelText: 'Password',
@@ -97,38 +98,54 @@ class RegisterView extends GetView<RegisterController> {
                   }),
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextField(
-                    controller: c.role,
-                    decoration: const InputDecoration(
-                      labelText: 'Masuk Sebagai',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(8.0),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Obx(
-                  () {
-                    return c.isLoading.value
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 50,
-                                vertical: 15,
-                              ),
+                Obx(() => Row(
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Admin Access',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            onPressed: () => c.register(),
-                            child: const Text('CREATE ACCOUNT'),
-                          );
-                  },
+                          ),
+                        ),
+                        Switch(
+                          value: isAdmin.value,
+                          onChanged: (value) {
+                            isAdmin.value = value;
+                          },
+                        ),
+                      ],
+                    )),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  child: Obx(() => ElevatedButton(
+                        style: const ButtonStyle(
+                          padding:
+                              MaterialStatePropertyAll(EdgeInsets.symmetric(
+                            vertical: 9,
+                            horizontal: 18,
+                          )),
+                        ),
+                        onPressed: () async {
+                          c.isLoading.isTrue
+                              ? null
+                              : await c.register(
+                                  isAdmin: isAdmin.value,
+                                  email: controller.emailController.text,
+                                  password: controller.passwordController.text,
+                                  userName: controller.userNameController.text,
+                                );
+                        },
+                        child: c.isLoading.isTrue
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
+                              )
+                            : Text(
+                                'Sign Up',
+                              ),
+                      )),
                 ),
                 TextButton(
                   onPressed: () {

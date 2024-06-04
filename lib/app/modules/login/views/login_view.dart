@@ -47,7 +47,7 @@ class LoginView extends GetView<LoginController> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
-                      controller: c.emailController,
+                      controller: controller.emailC,
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         labelStyle: TextStyle(color: Colors.white),
@@ -65,7 +65,7 @@ class LoginView extends GetView<LoginController> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        controller: c.passwordController,
+                        controller: controller.passwordC,
                         obscureText: controller.isObscure.value,
                         decoration: InputDecoration(
                           labelText: 'Password',
@@ -99,8 +99,8 @@ class LoginView extends GetView<LoginController> {
                               ),
                             ),
                             onPressed: () => c.login(
-                              c.emailController.text,
-                              c.passwordController.text,
+                              controller.emailC.text,
+                              controller.passwordC.text,
                             ),
                             child: const Text('LOGIN'),
                           );

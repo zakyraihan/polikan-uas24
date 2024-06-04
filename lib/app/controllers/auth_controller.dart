@@ -9,25 +9,31 @@ import 'package:polikan/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
-
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController role = TextEditingController();
-  RxString selectedRole = ''.obs; // Role default
+  RxBool isAdmin = false.obs;
 
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection('user');
 
-  Future<bool> isDuplicateEmail() async {
-    final users = await userCollection.get();
-    return users.docs.any((e) => e['email'] == emailController.text);
+  bool _isAdmin = false; // Inisialisasi sebagai false
+
+  // Setter untuk isAdmin
+  set isAdminFunc(bool value) {
+    _isAdmin = value;
   }
 
-  Future<void> register() async {
+  Future<bool> isDuplicateEmail(String email) async {
+    final users = await userCollection.get();
+    return users.docs.any((e) => e['email'] == email);
+  }
+
+  Future<void> register(
+      {required bool isAdmin,
+      required String userName,
+      required String email,
+      required String password}) async {
     isLoading.value = true;
     try {
-      if (await isDuplicateEmail()) {
+      if (await isDuplicateEmail(email)) {
         Get.snackbar(
           'Something Went Wrong',
           'Maaf, Email Sudah Terdaftar',
@@ -40,25 +46,24 @@ class AuthController extends GetxController {
 
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: email,
+        password: password,
       );
+
+      _isAdmin = isAdmin;
 
       final userModel = UserModel(
-        id: '1',
-        userName: userNameController.text,
-        email: emailController.text,
+        userName: userName,
+        email: email,
         uid: credential.user?.uid ?? '',
-        password: passwordController.text,
-        role: role.text,
+        password: password,
+        isAdmin: _isAdmin,
       );
 
-      final user = await userCollection.add(userModel.toJson());
-
-      await userCollection.doc(user.id).update({'id': user.id});
+      await userCollection.doc(userModel.uid).set(userModel.toJson());
 
       Get.showSnackbar(const GetSnackBar(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: 'Berhasil Register',
         message: 'Diarahkan Ke Halaman Login',
         duration: Duration(seconds: 2),
@@ -100,40 +105,28 @@ class AuthController extends GetxController {
         title: 'Loading...',
       );
 
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-      final user = credential.user;
-      if (user != null) {
-        final userDoc = await userCollection.doc(user.uid).get();
-        if (userDoc.exists) {
-          final userData = userDoc.data() as Map<String, dynamic>;
-          final userRole = userData['role'];
+      final userDoc = await userCollection.doc(credential.user?.uid).get();
 
-          Get.back(); // Dismiss the loading dialog
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
 
-          if (userRole == 'admin') {
+        if (data != null) {
+          final isAdmin = data['isAdmin'] ?? false;
+          if (isAdmin) {
             Get.offAllNamed(Routes.ADMIN);
           } else {
             Get.offAllNamed(Routes.HOME);
           }
         } else {
-          Get.back(); // Dismiss the loading dialog
-          Get.snackbar(
-            'Login Failed',
-            'User data not found',
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
-          );
+          print('Data pengguna kosong');
         }
       } else {
-        Get.back(); // Dismiss the loading dialog
-        Get.snackbar(
-          'Login Failed',
-          'Failed to get user data after login',
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        );
+        print('Dokumen pengguna tidak ditemukan');
       }
     } on FirebaseAuthException catch (e) {
       Get.back(); // Dismiss the loading dialog
@@ -161,5 +154,10 @@ class AuthController extends GetxController {
         duration: const Duration(seconds: 3),
       );
     }
+  }
+
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
+    Get.offAllNamed(Routes.LOGIN);
   }
 }
