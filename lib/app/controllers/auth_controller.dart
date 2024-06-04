@@ -160,4 +160,33 @@ class AuthController extends GetxController {
     await FirebaseAuth.instance.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }
+
+  String _determineHomeRoute(String uid) {
+    // Mendapatkan data pengguna dari Firestore
+    userCollection.doc(uid).get().then((userDoc) {
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>;
+        if (data != null) {
+          final isAdmin = data['isAdmin'] ?? false;
+          if (isAdmin) {
+            return Routes.ADMIN;
+          } else {
+            return Routes.HOME;
+          }
+        }
+      }
+    }).catchError((error) {
+      log('Error determining home route: $error');
+    });
+    return Routes.LOGIN;
+  }
+
+  String get autoLoginRoute {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return _determineHomeRoute(user.uid);
+    } else {
+      return Routes.LOGIN;
+    }
+  }
 }
