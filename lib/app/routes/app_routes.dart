@@ -8,6 +8,8 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const ADMIN = _Paths.ADMIN;
   static const ARTIKEL = _Paths.ARTIKEL;
+  static const TAMBAH_POLI = _Paths.TAMBAH_POLI;
+  static const POLI_USER = _Paths.POLI_USER;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const ADMIN = '/admin';
   static const ARTIKEL = '/artikel';
+  static const TAMBAH_POLI = '/tambah-poli';
+  static const POLI_USER = '/poli-user';
 }

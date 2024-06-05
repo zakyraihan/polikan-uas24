@@ -8,8 +8,12 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/poli-user/bindings/poli_user_binding.dart';
+import '../modules/poli-user/views/poli_user_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/tambah-poli/bindings/tambah_poli_binding.dart';
+import '../modules/tambah-poli/views/tambah_poli_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +47,16 @@ class AppPages {
       name: _Paths.ARTIKEL,
       page: () => ArtikelView(),
       binding: ArtikelBinding(),
+    ),
+    GetPage(
+      name: _Paths.TAMBAH_POLI,
+      page: () => const TambahPoliView(),
+      binding: TambahPoliBinding(),
+    ),
+    GetPage(
+      name: _Paths.POLI_USER,
+      page: () => const PoliUserView(),
+      binding: PoliUserBinding(),
     ),
   ];
 }

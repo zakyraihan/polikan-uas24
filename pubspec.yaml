@@ -16,6 +16,7 @@ dependencies:
   ticket_widget: ^1.0.2
   flutter_barcode_scanner: ^2.0.0
   qr_flutter: ^4.1.0
+  circular_menu: ^4.0.0
 
 dev_dependencies:
   flutter_lints: 4.0.0
