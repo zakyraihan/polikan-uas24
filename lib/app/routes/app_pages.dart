@@ -55,7 +55,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POLI_USER,
-      page: () => const PoliUserView(),
+      page: () => PoliUserView(),
       binding: PoliUserBinding(),
     ),
   ];
