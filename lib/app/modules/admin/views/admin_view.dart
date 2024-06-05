@@ -17,9 +17,7 @@ class AdminView extends GetView<AdminController> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          
-        },
+        onPressed: () => controller.openScanner(),
         child: const Icon(
           Icons.qr_code_scanner_rounded,
         ),
