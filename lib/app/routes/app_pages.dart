@@ -36,12 +36,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADMIN,
-      page: () => const AdminView(),
+      page: () => AdminView(),
       binding: AdminBinding(),
     ),
     GetPage(
       name: _Paths.ARTIKEL,
-      page: () => const ArtikelView(),
+      page: () => ArtikelView(),
       binding: ArtikelBinding(),
     ),
   ];

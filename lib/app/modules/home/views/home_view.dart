@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:polikan/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -77,7 +78,7 @@ class HomeView extends GetView<HomeController> {
               crossAxisCount: 3,
               children: <Widget>[
                 InkWell(
-                  onTap: () => print('ok'),
+                  onTap: () => Get.toNamed(Routes.ARTIKEL),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -88,7 +89,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Tiket Antrian',
+                        'Tentang Penyakit',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,

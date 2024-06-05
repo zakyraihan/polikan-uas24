@@ -1,3 +1,7 @@
+analyzer:
+  errors:
+    body_might_complete_normally_catch_error: ignore
+    unnecessary_null_comparison: ignore
 include: package:flutter_lints/flutter.yaml
 linter:
   rules:
