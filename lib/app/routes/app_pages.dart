@@ -4,6 +4,8 @@ import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
 import '../modules/artikel/bindings/artikel_binding.dart';
 import '../modules/artikel/views/artikel_view.dart';
+import '../modules/detail-poli-user/bindings/detail_poli_user_binding.dart';
+import '../modules/detail-poli-user/views/detail_poli_user_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -22,7 +24,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.ADMIN;
 
   static final routes = [
     GetPage(
@@ -42,7 +44,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADMIN,
-      page: () => AdminView(),
+      page: () => const AdminView(),
       binding: AdminBinding(),
     ),
     GetPage(
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_POLI_USER,
+      page: () => const DetailPoliUserView(),
+      binding: DetailPoliUserBinding(),
     ),
   ];
 }

@@ -11,6 +11,7 @@ abstract class Routes {
   static const TAMBAH_POLI = _Paths.TAMBAH_POLI;
   static const POLI_USER = _Paths.POLI_USER;
   static const PROFILE = _Paths.PROFILE;
+  static const DETAIL_POLI_USER = _Paths.DETAIL_POLI_USER;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const TAMBAH_POLI = '/tambah-poli';
   static const POLI_USER = '/poli-user';
   static const PROFILE = '/profile';
+  static const DETAIL_POLI_USER = '/detail-poli-user';
 }
