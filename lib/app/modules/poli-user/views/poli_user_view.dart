@@ -39,11 +39,7 @@ class PoliUserView extends GetView<PoliUserController> {
             itemBuilder: (context, index) {
               JadwalPoli poli = allPoli[index];
               return Container(
-                child: TicketWidget(
-                  width: 100,
-                  height: 50,
-                  child: Text(poli.namaDokter),
-                ),
+                child: TicketWidget(width: 100, height: 50, child: Text(poli.namaDokter),),
               );
             },
           );
