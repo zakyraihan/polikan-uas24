@@ -100,7 +100,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => print('ok'),
+                  onTap: () => Get.toNamed(Routes.POLI_USER),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -122,7 +122,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => print('ok'),
+                  onTap: () => Get.toNamed(Routes.PROFILE),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -133,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Pasien',
+                        'Profile',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,

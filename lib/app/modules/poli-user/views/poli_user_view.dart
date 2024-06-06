@@ -10,39 +10,69 @@ class PoliUserView extends GetView<PoliUserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('PoliUserView'),
-          centerTitle: true,
+      appBar: AppBar(
+        title: const Text('PoliUserView'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: InkWell(
+          onTap: () => {},
+          child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: EdgeInsets.all(15),
+              height: 150, // Adjust height as needed
+              width: double.infinity, // Make it stretch horizontally
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: Row(
+                  children: [
+                    Text(
+                      '1',
+                      style: TextStyle(color: Colors.white, fontSize: 50),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: Text(
+                        '|',
+                        style: TextStyle(color: Colors.white, fontSize: 80),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 50),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'poli anak',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          Text(
+                            'merawat kesehatan anak-anak\nmulai dari bayi baru lahir hingga remaja.',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Responsive Header
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'My App Title', // Replace with your title
-                  style: TextStyle(fontSize: 24.0),
-                ),
-              ),
-
-              // Image with Aspect Ratio
-              AspectRatio(
-                aspectRatio: 3 / 2, // Adjust based on image dimensions
-                child: Image.asset(
-                    'assets/image.jpg'), // Replace with your image path
-              ),
-
-              // Content with Padding
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-                child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
