@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  const ProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
@@ -94,7 +97,6 @@ class ProfileView extends GetView<ProfileController> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text('Edit profile'),
                     style: ElevatedButton.styleFrom(
                       // primary: Colors.purple,
                       // onPrimary: Colors.white,
@@ -105,6 +107,7 @@ class ProfileView extends GetView<ProfileController> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
+                    child: Text('Edit profile'),
                   ),
                 ),
               ],
