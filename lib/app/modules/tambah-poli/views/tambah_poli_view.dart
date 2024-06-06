@@ -9,13 +9,34 @@ class TambahPoliView extends GetView<TambahPoliController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tambah Poli'),
-        centerTitle: true,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: TambahPoliForm(),
+      backgroundColor: Colors.blue.shade200,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.blue.shade200,
+      //   title: const Text('Tambah Poli'),
+      //   centerTitle: true,
+      // ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(Icons.arrow_back_ios_new),
+                ),
+                const Text(
+                  'Tambah Jadwal Poli',
+                  style: TextStyle(),
+                )
+              ],
+            ),
+            const SizedBox(height: 40),
+            const TambahPoliForm(),
+          ],
+        ),
       ),
     );
   }
@@ -58,41 +79,55 @@ class _TambahPoliFormState extends State<TambahPoliForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          _buildTextField(
-            controller: controller.namaDokterController,
-            label: 'Nama Dokter',
+    return Center(
+      child: Form(
+        key: _formKey,
+        child: Container(
+          height: MediaQuery.of(context).size.height / 1.5,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            color: Colors.grey.shade200,
           ),
-          _buildTextField(
-            controller: controller.spesialisController,
-            label: 'Spesialis',
+          child: ListView(
+            children: <Widget>[
+              _buildTextField(
+                controller: controller.namaDokterController,
+                label: 'Nama Dokter',
+              ),
+              _buildTextField(
+                controller: controller.spesialisController,
+                label: 'Spesialis',
+              ),
+              _buildDatePickerField(context),
+              _buildTextField(
+                controller: controller.lokasiController,
+                label: 'Lokasi',
+              ),
+              _buildTextField(
+                controller: controller.kontakController,
+                label: 'Kontak',
+              ),
+              _buildTextField(
+                controller: controller.informasiTambahanController,
+                label: 'Informasi Tambahan',
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    controller.tambahPoli();
+                  }
+                },
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? const CircularProgressIndicator()
+                      : const Text('Submit'),
+                ),
+              ),
+            ],
           ),
-          _buildDatePickerField(context),
-          _buildTextField(
-            controller: controller.lokasiController,
-            label: 'Lokasi',
-          ),
-          _buildTextField(
-            controller: controller.kontakController,
-            label: 'Kontak',
-          ),
-          _buildTextField(
-            controller: controller.informasiTambahanController,
-            label: 'Informasi Tambahan',
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState?.validate() ?? false) {
-                // Handle form submission
-              }
-            },
-            child: const Text('Submit'),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -104,6 +139,7 @@ class _TambahPoliFormState extends State<TambahPoliForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        autocorrect: false,
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
