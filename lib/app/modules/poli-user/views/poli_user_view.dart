@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:polikan/app/routes/app_pages.dart';
 
 import '../controllers/poli_user_controller.dart';
 
@@ -43,7 +43,9 @@ class PoliUserView extends GetView<PoliUserController> {
             itemBuilder: (context, index) {
               JadwalPoli poli = allPoli[index];
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20), // Adjust the spacing as needed
+
                 child: Dismissible(
                   key: Key(poli.codePoli.toString()),
                   confirmDismiss: (direction) {
@@ -76,67 +78,64 @@ class PoliUserView extends GetView<PoliUserController> {
                       ],
                     );
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
+                  child: InkWell(
+                    onTap: () => Get.toNamed(
+                      Routes.DETAIL_POLI_USER,
+                      arguments: poli,
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nama Dokter: ${poli.namaDokter}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Nama Dokter: ${poli.namaDokter}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Spesialis: ${poli.spesialis}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Jam Praktek: ${_formatTimestamp(poli.jamPraktek)}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Lokasi: ${poli.lokasi}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Kontak: ${poli.kontak}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Informasi Tambahan: ${poli.informasiTambahan}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Spesialis: ${poli.spesialis}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Jam Praktek: ${_formatTimestamp(poli.jamPraktek)}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Lokasi: ${poli.lokasi}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Kontak: ${poli.kontak}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Informasi Tambahan: ${poli.informasiTambahan}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: QrImageView(
-                            data: poli.codePoli.toString(),
-                            version: QrVersions.auto,
-                            size: 200,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

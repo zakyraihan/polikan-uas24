@@ -15,6 +15,7 @@ class JadwalPoli {
   String lokasi;
   String kontak;
   String informasiTambahan;
+  
 
   JadwalPoli({
     required this.namaDokter,

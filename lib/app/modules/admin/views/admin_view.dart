@@ -32,7 +32,7 @@ class AdminView extends GetView<AdminController> {
           badgeLabel: 'Open PDF',
           icon: Icons.edit_document,
           onTap: () {
-            print('Open PDF tapped');
+            controller.bookingPdf();
           },
         ),
       ],

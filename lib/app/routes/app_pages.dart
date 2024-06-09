@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/pasien/bindings/pasien_binding.dart';
+import '../modules/pasien/views/pasien_view.dart';
 import '../modules/poli-user/bindings/poli_user_binding.dart';
 import '../modules/poli-user/views/poli_user_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -59,18 +61,23 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POLI_USER,
-      page: () => PoliUserView(),
+      page: () => const PoliUserView(),
       binding: PoliUserBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => ProfileView(),
+      page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: _Paths.DETAIL_POLI_USER,
-      page: () => const DetailPoliUserView(),
+      page: () => DetailPoliUserView(),
       binding: DetailPoliUserBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASIEN,
+      page: () => const PasienView(),
+      binding: PasienBinding(),
     ),
   ];
 }

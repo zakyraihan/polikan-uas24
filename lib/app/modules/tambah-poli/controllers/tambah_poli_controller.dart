@@ -51,4 +51,19 @@ class TambahPoliController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  @override
+  void dispose() {
+    @override
+    void dispose() {
+      namaDokterController.dispose();
+      spesialisController.dispose();
+      lokasiController.dispose();
+      kontakController.dispose();
+      informasiTambahanController.dispose();
+      super.dispose();
+    }
+
+    super.dispose();
+  }
 }

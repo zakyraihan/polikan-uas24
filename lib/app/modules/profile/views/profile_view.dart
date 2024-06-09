@@ -41,7 +41,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Anna Avetisyan',
+                  '${controller.user?.displayName}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -82,7 +82,7 @@ class ProfileView extends GetView<ProfileController> {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     leading: Icon(Icons.email, color: Colors.purple),
-                    title: Text('info@aplusdesign.co'),
+                    title: Text('${controller.user?.email}'),
                   ),
                 ),
                 Divider(),

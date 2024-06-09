@@ -10,32 +10,33 @@ class TambahPoliView extends GetView<TambahPoliController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade200,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blue.shade200,
-      //   title: const Text('Tambah Poli'),
-      //   centerTitle: true,
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Icons.arrow_back_ios_new),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => Get.back(),
+                    icon: const Icon(Icons.arrow_back_ios_new),
+                  ),
+                  const Text(
+                    'Tambah Jadwal Poli',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              const SizedBox(height: 40),
+              const Expanded(
+                child: SingleChildScrollView(
+                  child: TambahPoliForm(),
                 ),
-                const Text(
-                  'Tambah Jadwal Poli',
-                  style: TextStyle(),
-                )
-              ],
-            ),
-            const SizedBox(height: 40),
-            const TambahPoliForm(),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -53,15 +54,7 @@ class _TambahPoliFormState extends State<TambahPoliForm> {
   final controller = Get.put(TambahPoliController());
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    controller.namaDokterController.dispose();
-    controller.spesialisController.dispose();
-    controller.lokasiController.dispose();
-    controller.kontakController.dispose();
-    controller.informasiTambahanController.dispose();
-    super.dispose();
-  }
+
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -83,13 +76,12 @@ class _TambahPoliFormState extends State<TambahPoliForm> {
       child: Form(
         key: _formKey,
         child: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(30)),
             color: Colors.grey.shade200,
           ),
-          child: ListView(
+          child: Column(
             children: <Widget>[
               _buildTextField(
                 controller: controller.namaDokterController,
