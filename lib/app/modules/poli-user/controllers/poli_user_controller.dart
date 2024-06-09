@@ -14,19 +14,11 @@ class PoliUserController extends GetxController {
     yield* firestore.collection('jadwal-poli').snapshots();
   }
 
-  getPoliUser() async {
-    // status.value = true;
+  deletePoli(String id) async {
     try {
-      final hasil = await firestore.collection('jadwal-poli').get();
-      if (hasil.docs.isNotEmpty) {
-        hasil.docs.map((e) {
-          JadwalPoli dataList = JadwalPoli.fromJson(Map.from(e.data()), e.id);
-          data.add(dataList);
-        }).toList();
-      }
+      await firestore.collection('jadwal-poli').doc(id).delete();
     } catch (e) {
-      log('gagal mengambil poli user --> $e');
+      log('gagal mendelete poli $e');
     }
-    status.value = true;
   }
 }

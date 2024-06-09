@@ -2,17 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
-import 'package:ticket_widget/ticket_widget.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../controllers/poli_user_controller.dart';
 
 class PoliUserView extends GetView<PoliUserController> {
   const PoliUserView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PoliUserView'),
+        title: const Text('Pilihan Jadwal Poliklinik'),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -24,28 +25,120 @@ class PoliUserView extends GetView<PoliUserController> {
             );
           }
 
-          if (snapshot.data!.docs.isEmpty) {
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(child: Text('Tidak Ada Jadwal Poli'));
           }
 
           List<JadwalPoli> allPoli = [];
 
           for (var e in snapshot.data!.docs) {
-            allPoli.add(JadwalPoli.fromJson(e.data(), ''));
+            var data = e.data();
+            if (data != null) {
+              allPoli.add(JadwalPoli.fromJson(data, e.id));
+            }
           }
 
           return ListView.builder(
             itemCount: allPoli.length,
             itemBuilder: (context, index) {
               JadwalPoli poli = allPoli[index];
-              return TicketWidget(
-                width: 100,
-                height: 50,
-                child: Column(
-                  children: [
-                    Text(poli.namaDokter),
-                    Text(poli.jamPraktek.toString()),
-                  ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Dismissible(
+                  key: Key(poli.codePoli.toString()),
+                  confirmDismiss: (direction) {
+                    return Get.defaultDialog(
+                      title: 'Delete Jadwal',
+                      middleText: 'Apakah Kamu Yakin Delete Jadwal',
+                      actions: [
+                        OutlinedButton(
+                          onPressed: () => Get.back(),
+                          child: const Text('No'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            controller.deletePoli(poli.codePoli);
+                            Get.back();
+                          },
+                          child: Obx(
+                            () => controller.status.isFalse
+                                ? const Text('Delete')
+                                : Container(
+                                    padding: const EdgeInsets.all(2),
+                                    width: 15,
+                                    height: 15,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                    ),
+                                  ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nama Dokter: ${poli.namaDokter}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Spesialis: ${poli.spesialis}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Jam Praktek: ${_formatTimestamp(poli.jamPraktek)}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Lokasi: ${poli.lokasi}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Kontak: ${poli.kontak}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Informasi Tambahan: ${poli.informasiTambahan}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: QrImageView(
+                            data: poli.codePoli.toString(),
+                            version: QrVersions.auto,
+                            size: 200,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
@@ -53,5 +146,10 @@ class PoliUserView extends GetView<PoliUserController> {
         },
       ),
     );
+  }
+
+  String _formatTimestamp(Timestamp timestamp) {
+    DateTime date = timestamp.toDate();
+    return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
   }
 }

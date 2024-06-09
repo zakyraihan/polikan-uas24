@@ -26,14 +26,13 @@ class TambahPoliController extends GetxController {
         codePoli: codePoliController.text,
         namaDokter: namaDokterController.text,
         spesialis: spesialisController.text,
-        jamPraktek: DateTime(selectedDate!.day), 
+        jamPraktek: Timestamp.fromMicrosecondsSinceEpoch(selectedDate!.day),
         lokasi: lokasiController.text,
         kontak: kontakController.text,
         informasiTambahan: informasiTambahanController.text,
       );
 
-      var hasil = await poliCollection.add(poliModel
-          .toJson()); 
+      var hasil = await poliCollection.add(poliModel.toJson());
       await poliCollection.doc(hasil.id).update({'codePoli': hasil.id});
 
       Get.showSnackbar(const GetSnackBar(
