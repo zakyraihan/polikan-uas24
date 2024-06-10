@@ -38,14 +38,14 @@ class HomeView extends GetView<HomeController> {
                     children: <Widget>[
                       const SizedBox(height: 50),
                       const Text(
-                        'Selamat Pagi,',
+                        'Halo,',
                         style: TextStyle(
                           fontSize: 24,
                           color: Colors.white,
                         ),
                       ),
                       const Text(
-                        'aini',
+                        'irana',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -203,44 +203,42 @@ class HomeView extends GetView<HomeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dokter: ${data.namaDokter}',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Dokter: ${data.namaDokter}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Spesialis: ${data.spesialis}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Jam Praktek: ${_formatTimestamp(data.jam)}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Nama Pasien: ${data.nama}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Kontak Pasien: ${data.notelepon}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Alamat Pasien: ${data.alamat}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Spesialis: ${data.spesialis}',
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Jam Praktek: ${_formatTimestamp(data.jam)}',
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Nama Pasien: ${data.nama}',
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Kontak Pasien: ${data.notelepon}',
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Alamat Pasien: ${data.alamat}',
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
                               ),
                               Column(
                                 mainAxisAlignment:

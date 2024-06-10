@@ -14,10 +14,10 @@ class AdminController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   RxList<Booking> allBooking = List<Booking>.empty().obs;
 
-  void openScanner() async {
+  Future<void> openScanner() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
       '#000000',
-      'Cancel',
+      'Batal',
       true,
       ScanMode.QR,
     );
@@ -27,29 +27,36 @@ class AdminController extends GetxController {
 
     try {
       // Membaca data dari dokumen di koleksi 'booking'
-      DocumentReference bookingRef =
-          firestore.collection('booking').doc(barcodeScanRes);
-      DocumentSnapshot bookingSnapshot = await bookingRef.get();
+      QuerySnapshot bookingSnapshot = await firestore
+          .collection('booking')
+          .where('codePoli', isEqualTo: barcodeScanRes)
+          .get();
 
-      if (bookingSnapshot.exists) {
-        // Mendapatkan data dari dokumen 'booking'
-        Map<String, dynamic> bookingData =
-            bookingSnapshot.data() as Map<String, dynamic>;
+      if (bookingSnapshot.docs.isNotEmpty) {
+        // Loop melalui setiap dokumen yang ditemukan
+        for (var bookingDoc in bookingSnapshot.docs) {
+          // Mendapatkan data dari dokumen 'booking'
+          Object? bookingData = bookingDoc.data();
 
-        // Menghapus dokumen dari koleksi 'booking'
-        batch.delete(bookingRef);
+          // Menghapus dokumen dari koleksi 'booking'
+          batch.delete(bookingDoc.reference);
 
-        // Menambahkan data yang sama ke koleksi 'selesai'
-        CollectionReference selesaiCollection = firestore.collection('selesai');
-        batch.set(selesaiCollection.doc(), bookingData);
+          // Menambahkan data yang sama ke koleksi 'selesai'
+          CollectionReference selesaiCollection =
+              firestore.collection('selesai');
+
+          // Menambahkan data ke koleksi 'selesai'
+          batch.set(selesaiCollection.doc(), bookingData);
+        }
 
         // Menjalankan batch transaksi
         await batch.commit();
 
-        print('Data berhasil dipindahkan dari "booking" ke "selesai".');
+        print(
+            'Data dengan kode poli $barcodeScanRes berhasil dipindahkan dari "booking" ke "selesai".');
       } else {
         print(
-            'Dokumen dengan ID yang dipindai tidak ditemukan dalam koleksi "booking".');
+            'Dokumen dengan kode poli $barcodeScanRes tidak ditemukan dalam koleksi "booking".');
       }
     } catch (error) {
       print('Terjadi kesalahan: $error');

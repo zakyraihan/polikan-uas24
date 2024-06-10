@@ -9,7 +9,8 @@ class DetailPoliUserController extends GetxController {
   TextEditingController alamatController = TextEditingController();
   TextEditingController noteleponController = TextEditingController();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference bookingCollection =
+      FirebaseFirestore.instance.collection('booking');
 
   bookingJadwal(JadwalPoli poli) async {
     Map<String, dynamic> bookingData = {
@@ -25,7 +26,9 @@ class DetailPoliUserController extends GetxController {
 
     // Save the booking data to Firestore
     try {
-      await FirebaseFirestore.instance.collection('booking').add(bookingData);
+      var hasil = await bookingCollection.add(bookingData);
+      await bookingCollection.doc(hasil.id).update({'codePoli': hasil.id});
+
       Get.snackbar(
         "Booking Successful",
         "Your booking has been added successfully!",
