@@ -24,7 +24,6 @@ class AdminView extends GetView<AdminController> {
           badgeLabel: 'Open Scanner',
           icon: Icons.qr_code_scanner_outlined,
           onTap: () {
-            print('Open Scanner tapped');
             controller.openScanner();
           },
         ),
@@ -32,7 +31,7 @@ class AdminView extends GetView<AdminController> {
           badgeLabel: 'Open PDF',
           icon: Icons.edit_document,
           onTap: () {
-            controller.bookingPdf();
+            // controller.bookingPdf();
           },
         ),
       ],

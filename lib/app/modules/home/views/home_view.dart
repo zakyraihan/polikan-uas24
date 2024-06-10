@@ -189,80 +189,86 @@ class HomeView extends GetView<HomeController> {
                     itemCount: allBooking.length,
                     itemBuilder: (context, index) {
                       Booking data = allBooking[index];
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30)),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      return InkWell(
+                        onTap: () => _showDetailDialog(context, data),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30)),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Dokter: ${data.namaDokter}',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Spesialis: ${data.spesialis}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Jam Praktek: ${_formatTimestamp(data.jam)}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Nama Pasien: ${data.nama}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Kontak Pasien: ${data.notelepon}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Alamat Pasien: ${data.alamat}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Dokter: ${data.namaDokter}',
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    height: 85,
+                                    width: 85,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade300,
+                                      // borderRadius:
+                                    ),
+                                    child: const Center(
+                                      child: Icon(Icons.timer),
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 5),
                                   Text(
-                                    'Spesialis: ${data.spesialis}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Jam Praktek: ${_formatTimestamp(data.jam)}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Nama Pasien: ${data.nama}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Kontak Pasien: ${data.notelepon}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Alamat Pasien: ${data.alamat}',
-                                    style: const TextStyle(fontSize: 14),
+                                    _formatTimestamp(data.tanggalBooking),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade700,
+                                    ),
                                   ),
                                 ],
-                              ),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: 85,
-                                  width: 85,
-                                  child: QrImageView(
-                                    data: data.codePoli.toString(),
-                                    version: QrVersions.auto,
-                                    size: 200,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  _formatTimestamp(data.tanggalBooking),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -280,4 +286,53 @@ class HomeView extends GetView<HomeController> {
 String _formatTimestamp(Timestamp timestamp) {
   DateTime date = timestamp.toDate();
   return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
+}
+
+void _showDetailDialog(BuildContext context, Booking data) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          _formatTimestamp(data.tanggalBooking),
+          style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+        ),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: QrImageView(
+                    data: data.codePoli.toString(),
+                    version: QrVersions.auto,
+                    size: 200,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Center(
+                child: Text(
+                  'Jangan Sebarluaskan Barcode Ini',
+                  style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
+    },
+  );
 }
