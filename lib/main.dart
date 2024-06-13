@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,21 +21,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final AuthController _authController = Get.put(AuthController());
-
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final AuthController _authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: null,
-      builder: (context, snapAuth) {
-        if (snapAuth.connectionState == ConnectionState.waiting) {
+    return FutureBuilder<String>(
+      future: _authController.autoLoginRoute,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
         }
+
+        final initialRoute = snapshot.data ?? Routes.LOGIN;
+
         return GetMaterialApp(
           title: "Application",
-          initialRoute: Routes.ADMIN,
+          initialRoute: initialRoute,
           getPages: AppPages.routes,
           debugShowCheckedModeBanner: false,
         );

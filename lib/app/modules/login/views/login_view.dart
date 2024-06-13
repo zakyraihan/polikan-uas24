@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/controllers/auth_controller.dart';
 import 'package:polikan/app/modules/login/controllers/login_controller.dart';
+import 'package:polikan/widget/social_button_widget.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key});
   final c = Get.put(AuthController());
-
-  @override
-  final controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +103,23 @@ class LoginView extends GetView<LoginController> {
                             child: const Text('LOGIN'),
                           );
                   }),
+                  const SizedBox(height: 10),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () => c.signInWithGoogle(),
+                        child: const Text('Google'),
+                      ),
+                      const SizedBox(width: 10),
+                      socialButton(
+                        () => {},
+                        'Apple',
+                        'images/icons8-google-48.png',
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

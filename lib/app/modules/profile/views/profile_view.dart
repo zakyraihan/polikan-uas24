@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:polikan/app/controllers/auth_controller.dart';
 
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({super.key});
+  ProfileView({super.key});
+
+  final c = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +99,7 @@ class ProfileView extends GetView<ProfileController> {
                 SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => c.logOut(),
                     style: ElevatedButton.styleFrom(
                       // primary: Colors.purple,
                       // onPrimary: Colors.white,
@@ -107,7 +110,7 @@ class ProfileView extends GetView<ProfileController> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: Text('Edit profile'),
+                    child: Text('Log Out'),
                   ),
                 ),
               ],

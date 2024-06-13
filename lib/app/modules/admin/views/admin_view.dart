@@ -1,12 +1,15 @@
 import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:polikan/app/controllers/auth_controller.dart';
 import 'package:polikan/app/routes/app_pages.dart';
 
 import '../controllers/admin_controller.dart';
 
 class AdminView extends GetView<AdminController> {
-  const AdminView({super.key});
+  AdminView({super.key});
+
+  final c = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +45,10 @@ class AdminView extends GetView<AdminController> {
         title: const Text('Polikan Admin Dashboard'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               // Handle notifications
-              print('Notifications tapped');
+              c.logOut();
             },
           ),
         ],

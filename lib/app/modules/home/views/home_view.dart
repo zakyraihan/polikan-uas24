@@ -14,8 +14,17 @@ class HomeView extends GetView<HomeController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
         centerTitle: true,
+        backgroundColor: const Color(0xFF7B61FF),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: InkWell(
+            onTap: () => Get.toNamed(Routes.PROFILE),
+            child: const CircleAvatar(
+              child: Icon(Icons.person),
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -128,18 +137,18 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => Get.toNamed(Routes.PROFILE),
+                    onTap: () => Get.toNamed(Routes.HISTORI_BOOKING),
                     child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
-                          Icons.person,
+                          Icons.history,
                           size: 50,
                           color: Colors.purple,
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Profile',
+                          'History',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,

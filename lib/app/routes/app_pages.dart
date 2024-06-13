@@ -6,8 +6,12 @@ import '../modules/artikel/bindings/artikel_binding.dart';
 import '../modules/artikel/views/artikel_view.dart';
 import '../modules/detail-poli-user/bindings/detail_poli_user_binding.dart';
 import '../modules/detail-poli-user/views/detail_poli_user_view.dart';
+import '../modules/histori-booking/bindings/histori_booking_binding.dart';
+import '../modules/histori-booking/views/histori_booking_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jadwal-poli-admin/bindings/jadwal_poli_admin_binding.dart';
+import '../modules/jadwal-poli-admin/views/jadwal_poli_admin_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/pasien/bindings/pasien_binding.dart';
@@ -46,7 +50,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADMIN,
-      page: () => const AdminView(),
+      page: () => AdminView(),
       binding: AdminBinding(),
     ),
     GetPage(
@@ -66,18 +70,28 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: _Paths.DETAIL_POLI_USER,
-      page: () => DetailPoliUserView(),
+      page: () => const DetailPoliUserView(),
       binding: DetailPoliUserBinding(),
     ),
     GetPage(
       name: _Paths.PASIEN,
       page: () => const PasienView(),
       binding: PasienBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORI_BOOKING,
+      page: () => HistoriBookingView(),
+      binding: HistoriBookingBinding(),
+    ),
+    GetPage(
+      name: _Paths.JADWAL_POLI_ADMIN,
+      page: () => JadwalPoliAdminView(),
+      binding: JadwalPoliAdminBinding(),
     ),
   ];
 }

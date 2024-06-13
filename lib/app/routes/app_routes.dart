@@ -13,6 +13,8 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const DETAIL_POLI_USER = _Paths.DETAIL_POLI_USER;
   static const PASIEN = _Paths.PASIEN;
+  static const HISTORI_BOOKING = _Paths.HISTORI_BOOKING;
+  static const JADWAL_POLI_ADMIN = _Paths.JADWAL_POLI_ADMIN;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const DETAIL_POLI_USER = '/detail-poli-user';
   static const PASIEN = '/pasien';
+  static const HISTORI_BOOKING = '/histori-booking';
+  static const JADWAL_POLI_ADMIN = '/jadwal-poli-admin';
 }
