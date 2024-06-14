@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/controllers/auth_controller.dart';
 import 'package:polikan/app/modules/login/controllers/login_controller.dart';
-import 'package:polikan/widget/social_button_widget.dart';
+import 'package:polikan/app/routes/app_pages.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key});
@@ -14,14 +14,6 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: Colors.lightBlueAccent,
       body: Stack(
         children: [
-          Positioned(
-            top: 30,
-            left: 16,
-            child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => Get.back(),
-            ),
-          ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -105,6 +97,10 @@ class LoginView extends GetView<LoginController> {
                   }),
                   const SizedBox(height: 10),
                   const Divider(),
+                  TextButton(
+                      onPressed: () => Get.toNamed(Routes.REGISTER),
+                      child: const Text('Belum Punya Akun? Register')),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -113,11 +109,6 @@ class LoginView extends GetView<LoginController> {
                         child: const Text('Google'),
                       ),
                       const SizedBox(width: 10),
-                      socialButton(
-                        () => {},
-                        'Apple',
-                        'images/icons8-google-48.png',
-                      ),
                     ],
                   )
                 ],

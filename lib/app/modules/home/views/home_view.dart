@@ -5,9 +5,11 @@ import 'package:polikan/app/routes/app_pages.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../detail-poli-user/model/booking_model.dart';
+import '../../profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,14 +55,17 @@ class HomeView extends GetView<HomeController> {
                           color: Colors.white,
                         ),
                       ),
-                      const Text(
-                        'irana',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+                      Obx(() {
+                        final user = profileController.user.value;
+                        return Text(
+                          user?.email ?? '',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        );
+                      }),
                       const SizedBox(height: 10),
                       const Text(
                         'Semoga Anda lekas sembuh',
@@ -200,81 +205,84 @@ class HomeView extends GetView<HomeController> {
                       Booking data = allBooking[index];
                       return InkWell(
                         onTap: () => _showDetailDialog(context, data),
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30)),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Dokter: ${data.namaDokter}',
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  bottomRight: Radius.circular(30)),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Dokter: ${data.namaDokter}',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Spesialis: ${data.spesialis}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Jam Praktek: ${_formatTimestamp(data.jam)}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Nama Pasien: ${data.nama}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Kontak Pasien: ${data.notelepon}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Alamat Pasien: ${data.alamat}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: 85,
-                                    width: 85,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      // borderRadius:
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Spesialis: ${data.spesialis}',
+                                      style: const TextStyle(fontSize: 14),
                                     ),
-                                    child: const Center(
-                                      child: Icon(Icons.timer),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Jam Praktek: ${_formatTimestamp(data.jam)}',
+                                      style: const TextStyle(fontSize: 14),
                                     ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    _formatTimestamp(data.tanggalBooking),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade700,
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Nama Pasien: ${data.nama}',
+                                      style: const TextStyle(fontSize: 14),
                                     ),
-                                  ),
-                                ],
-                              )
-                            ],
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Kontak Pasien: ${data.notelepon}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Alamat Pasien: ${data.alamat}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 85,
+                                      width: 85,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        // borderRadius:
+                                      ),
+                                      child: const Center(
+                                        child: Icon(Icons.timer),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      _formatTimestamp(data.tanggalBooking),
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

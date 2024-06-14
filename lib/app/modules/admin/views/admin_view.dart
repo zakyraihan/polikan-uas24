@@ -61,33 +61,13 @@ class AdminView extends GetView<AdminController> {
           mainAxisSpacing: 10,
           children: [
             _buildDashboardCard(
-              icon: Icons.people,
-              title: 'Patients',
-              subtitle: 'Manage Patients',
-              color: Colors.blue,
-              onTap: () {
-                print('Patients tapped');
-                // Navigate to Patients Management
-              },
-            ),
-            _buildDashboardCard(
               icon: Icons.calendar_today,
               title: 'Appointments',
               subtitle: 'View Appointments',
               color: Colors.green,
               onTap: () {
-                print('Appointments tapped');
+                Get.toNamed(Routes.SELESAI_ADMIN);
                 // Navigate to Appointments
-              },
-            ),
-            _buildDashboardCard(
-              icon: Icons.show_chart,
-              title: 'Statistics',
-              subtitle: 'View Statistics',
-              color: Colors.orange,
-              onTap: () {
-                print('Statistics tapped');
-                // Navigate to Statistics
               },
             ),
             _buildDashboardCard(

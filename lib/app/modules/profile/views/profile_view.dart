@@ -1,5 +1,3 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/controllers/auth_controller.dart';
@@ -9,7 +7,8 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   ProfileView({super.key});
 
-  final c = Get.put(AuthController());
+  final authController = Get.put(AuthController());
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,8 @@ class ProfileView extends GetView<ProfileController> {
         children: <Widget>[
           Container(
             width: lebar,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.purple, Colors.deepPurple],
                 begin: Alignment.topCenter,
@@ -33,7 +32,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
             child: Column(
               children: <Widget>[
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
                   child: Icon(
@@ -42,75 +41,66 @@ class ProfileView extends GetView<ProfileController> {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  '${controller.user?.displayName}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
+                const SizedBox(height: 10),
+                Obx(() {
+                  final user = profileController.user.value;
+                  return Text(
+                    user?.displayName ?? 'User',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  );
+                }),
               ],
             ),
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: const ListTile(
                     leading: Icon(Icons.cake, color: Colors.purple),
                     title: Text('Birthday'),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
-                    leading: Icon(Icons.phone, color: Colors.purple),
-                    title: Text('818 123 4567'),
-                  ),
-                ),
-                Divider(),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: const ListTile(
                     leading: Icon(Icons.account_circle, color: Colors.purple),
                     title: Text('Instagram account'),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
-                    leading: Icon(Icons.email, color: Colors.purple),
-                    title: Text('${controller.user?.email}'),
+                    leading: const Icon(Icons.email, color: Colors.purple),
+                    title: Obx(() {
+                      final user = profileController.user.value;
+                      return Text(user?.email ?? 'Email');
+                    }),
                   ),
                 ),
-                Divider(),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
-                    leading: Icon(Icons.lock, color: Colors.purple),
-                    title: Text('Password'),
-                  ),
-                ),
-                SizedBox(height: 20),
+                const Divider(),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () => c.logOut(),
+                    onPressed: () => authController.logOut(),
                     style: ElevatedButton.styleFrom(
                       // primary: Colors.purple,
                       // onPrimary: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(fontSize: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: Text('Log Out'),
+                    child: const Text('Log Out'),
                   ),
                 ),
               ],

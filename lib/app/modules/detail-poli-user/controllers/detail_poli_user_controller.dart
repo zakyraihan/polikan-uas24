@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
@@ -12,7 +13,10 @@ class DetailPoliUserController extends GetxController {
   CollectionReference bookingCollection =
       FirebaseFirestore.instance.collection('booking');
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   bookingJadwal(JadwalPoli poli) async {
+    String currentUserId = auth.currentUser?.uid ?? '';
     Map<String, dynamic> bookingData = {
       "namaDokter": poli.namaDokter,
       "codePoli": poli.codePoli,
@@ -22,6 +26,7 @@ class DetailPoliUserController extends GetxController {
       "alamat": alamatController.text,
       "tanggalBooking": DateTime.now(),
       "notelepon": noteleponController.text,
+      'userId': currentUserId,
     };
 
     // Save the booking data to Firestore

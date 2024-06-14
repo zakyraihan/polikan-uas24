@@ -22,6 +22,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/selesai-admin/bindings/selesai_admin_binding.dart';
+import '../modules/selesai-admin/views/selesai_admin_view.dart';
 import '../modules/tambah-poli/bindings/tambah_poli_binding.dart';
 import '../modules/tambah-poli/views/tambah_poli_view.dart';
 
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.JADWAL_POLI_ADMIN,
       page: () => JadwalPoliAdminView(),
       binding: JadwalPoliAdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELESAI_ADMIN,
+      page: () =>  SelesaiAdminView(),
+      binding: SelesaiAdminBinding(),
     ),
   ];
 }

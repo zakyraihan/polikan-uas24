@@ -15,6 +15,7 @@ abstract class Routes {
   static const PASIEN = _Paths.PASIEN;
   static const HISTORI_BOOKING = _Paths.HISTORI_BOOKING;
   static const JADWAL_POLI_ADMIN = _Paths.JADWAL_POLI_ADMIN;
+  static const SELESAI_ADMIN = _Paths.SELESAI_ADMIN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const PASIEN = '/pasien';
   static const HISTORI_BOOKING = '/histori-booking';
   static const JADWAL_POLI_ADMIN = '/jadwal-poli-admin';
+  static const SELESAI_ADMIN = '/selesai-admin';
 }
