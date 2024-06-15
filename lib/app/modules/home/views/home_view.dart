@@ -10,6 +10,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

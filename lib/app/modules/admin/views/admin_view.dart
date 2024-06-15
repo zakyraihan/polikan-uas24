@@ -71,6 +71,16 @@ class AdminView extends GetView<AdminController> {
               },
             ),
             _buildDashboardCard(
+              icon: Icons.list_alt,
+              title: 'Jadwal Poli',
+              subtitle: 'Liat Jadwal',
+              color: Colors.green,
+              onTap: () {
+                Get.toNamed(Routes.JADWAL_POLI_ADMIN);
+                // Navigate to Appointments
+              },
+            ),
+            _buildDashboardCard(
               icon: Icons.add_chart_outlined,
               title: 'Tambah Data',
               subtitle: 'Buat Jadwal Poli',
