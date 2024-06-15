@@ -26,6 +26,8 @@ import '../modules/selesai-admin/bindings/selesai_admin_binding.dart';
 import '../modules/selesai-admin/views/selesai_admin_view.dart';
 import '../modules/tambah-poli/bindings/tambah_poli_binding.dart';
 import '../modules/tambah-poli/views/tambah_poli_view.dart';
+import '../modules/update-jadwal-admin/bindings/update_jadwal_admin_binding.dart';
+import '../modules/update-jadwal-admin/views/update_jadwal_admin_view.dart';
 
 part 'app_routes.dart';
 
@@ -97,8 +99,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SELESAI_ADMIN,
-      page: () =>  SelesaiAdminView(),
+      page: () => SelesaiAdminView(),
       binding: SelesaiAdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_JADWAL_ADMIN,
+      page: () => const UpdateJadwalAdminView(),
+      binding: UpdateJadwalAdminBinding(),
     ),
   ];
 }

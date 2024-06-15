@@ -80,7 +80,7 @@ class JadwalPoliAdminView extends GetView<JadwalPoliAdminController> {
                   },
                   child: InkWell(
                     onTap: () => Get.toNamed(
-                      Routes.DETAIL_POLI_USER,
+                      Routes.UPDATE_JADWAL_ADMIN,
                       arguments: poli,
                     ),
                     child: Container(

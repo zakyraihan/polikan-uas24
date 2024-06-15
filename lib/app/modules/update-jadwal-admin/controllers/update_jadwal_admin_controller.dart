@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
 
-class TambahPoliController extends GetxController {
+class UpdateJadwalAdminController extends GetxController {
   TextEditingController namaDokterController = TextEditingController();
   TextEditingController spesialisController = TextEditingController();
   TextEditingController lokasiController = TextEditingController();
@@ -15,15 +15,27 @@ class TambahPoliController extends GetxController {
   DateTime? selectedDate;
   RxBool isLoading = false.obs;
 
+  final JadwalPoli poli = Get.arguments;
   CollectionReference poliCollection =
       FirebaseFirestore.instance.collection('jadwal-poli');
 
-  Future<void> tambahPoli() async {
+  @override
+  void onInit() {
+    namaDokterController.text = poli.namaDokter;
+    spesialisController.text = poli.spesialis;
+    lokasiController.text = poli.lokasi;
+    kontakController.text = poli.kontak;
+    selectedDate = poli.jamPraktek.toDate();
+    informasiTambahanController.text = poli.informasiTambahan;
+    super.onInit();
+  }
+
+  Future<void> updatePoli() async {
     isLoading.value = true;
 
     try {
       final poliModel = JadwalPoli(
-        codePoli: codePoliController.text,
+        codePoli: poli.codePoli,
         namaDokter: namaDokterController.text,
         spesialis: spesialisController.text,
         jamPraktek: Timestamp.fromMicrosecondsSinceEpoch(selectedDate!.day),
@@ -32,12 +44,11 @@ class TambahPoliController extends GetxController {
         informasiTambahan: informasiTambahanController.text,
       );
 
-      var hasil = await poliCollection.add(poliModel.toJson());
-      await poliCollection.doc(hasil.id).update({'codePoli': hasil.id});
+      await poliCollection.doc(poli.codePoli).update(poliModel.toJson());
 
       Get.showSnackbar(const GetSnackBar(
         title: 'Success',
-        message: 'Berhasil Menambahkan Jadwal',
+        message: 'Berhasil update Jadwal',
         duration: Duration(seconds: 2),
       ));
 
@@ -45,26 +56,11 @@ class TambahPoliController extends GetxController {
       log('Error membuat jadwal ---> $e');
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
-        message: 'Gagal Menambahkan Jadwal: $e',
+        message: 'Gagal update Jadwal: $e',
         duration: const Duration(seconds: 2),
       ));
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void dispose() {
-    @override
-    void dispose() {
-      namaDokterController.dispose();
-      spesialisController.dispose();
-      lokasiController.dispose();
-      kontakController.dispose();
-      informasiTambahanController.dispose();
-      super.dispose();
-    }
-
-    super.dispose();
   }
 }
