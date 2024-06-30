@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
+import 'package:polikan/app/routes/app_pages.dart';
 
 class TambahPoliController extends GetxController {
   TextEditingController namaDokterController = TextEditingController();
@@ -39,8 +40,7 @@ class TambahPoliController extends GetxController {
         title: 'Success',
         message: 'Berhasil Menambahkan Jadwal',
         duration: Duration(seconds: 2),
-      ));
-
+      )).future.then((value) => Get.offAllNamed(Routes.JADWAL_POLI_ADMIN));
     } catch (e) {
       log('Error membuat jadwal ---> $e');
       Get.showSnackbar(GetSnackBar(

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:polikan/app/data/model/jadwalpolimodel.dart';
 
+import '../../../routes/app_pages.dart';
+
 class UpdateJadwalAdminController extends GetxController {
   TextEditingController namaDokterController = TextEditingController();
   TextEditingController spesialisController = TextEditingController();
@@ -51,14 +53,13 @@ class UpdateJadwalAdminController extends GetxController {
         message: 'Berhasil update Jadwal',
         duration: Duration(seconds: 2),
       ));
-
     } catch (e) {
       log('Error membuat jadwal ---> $e');
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
         message: 'Gagal update Jadwal: $e',
         duration: const Duration(seconds: 2),
-      ));
+      )).future.then((value) => Get.offAllNamed(Routes.JADWAL_POLI_ADMIN));
     } finally {
       isLoading.value = false;
     }
